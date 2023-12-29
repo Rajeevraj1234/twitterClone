@@ -1,0 +1,23 @@
+import React from "react";
+import LeftSidebar from "../allbars/l_sidebar";
+import RightSidebar from "../allbars/r_sidebar";
+import NotificationMidPage from "../allbars/notificationMidPage";
+
+const Notification = () => {
+  return (
+    <div className="flex justify-center w-[100vw] h-[100vh] px-[15%]">
+      <div className="w-[22%]  ">
+        {" "}
+        <LeftSidebar pageName={"notification"} />
+      </div>
+      <div className="border border-gray w-[57%] overflow-scroll no-scrollbar">
+        <NotificationMidPage />
+      </div>
+      <div className="w-[37%] ">
+        <RightSidebar />
+      </div>
+    </div>
+  );
+}
+
+export default Notification
