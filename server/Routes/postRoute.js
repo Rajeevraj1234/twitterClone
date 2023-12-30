@@ -91,4 +91,11 @@ router.post("/like", async (req, res) => {
   }
 });
 
+router.post("/delete" , async(req,res)=>{
+  const data = req.body;
+  await Tweet.findOneAndDelete({_id:data.tweetID})
+  await User.updateOne({_id:data.userID._id},{$pull:{posts: data.tweetID}})
+  res.status(200).json({msg:"Tweet Deleted Sucessfully"});
+})
+
 module.exports = router;

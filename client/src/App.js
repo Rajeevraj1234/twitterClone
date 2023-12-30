@@ -8,6 +8,7 @@ import Lists from "./components/Pages/lists";
 import Bookmarks from "./components/Pages/bookmarks";
 import Communities from "./components/Pages/communities";
 import Profile from "./components/Pages/profile";
+import OtherProfile from "./components/Pages/otherProfile";
 import Login from "./components/Pages/login";
 import Signup from "./components/Pages/signup";
 import { useUserLoginContextProvider } from "../src/components/context/userLoginContext";
@@ -25,7 +26,8 @@ function App() {
         <Route path="/lists" element={<Lists />} />
         <Route path="/bookmarks" element={<Bookmarks />} />
         <Route path="/communities" element={<Communities />} />
-        <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/otherprofile/:username" element={<OtherProfile />} />
         <Route path="/home" element={<MainPage />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>

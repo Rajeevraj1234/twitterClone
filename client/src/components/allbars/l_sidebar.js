@@ -231,7 +231,7 @@ const LeftSidebar = ({ pageName }) => {
           }}
         >
           {active === "profile" ? (
-            <NavLink to={`/profile/${userLogin._id}`}>
+            <NavLink to={`/profile/${userLogin?.username}`}>
               <span className="flex items-center text-2xl gap-2">
                 <FaUser />
                 <span className="text-xl font-semibold hidden xl:block">
@@ -240,7 +240,7 @@ const LeftSidebar = ({ pageName }) => {
               </span>
             </NavLink>
           ) : (
-            <NavLink to={`/profile/${userLogin?._id}`}>
+            <NavLink to={`/profile/${userLogin?.username}`}>
               <span className="flex items-center text-2xl gap-2">
                 <FaRegUser />
                 <span className="text-xl hidden xl:block">Profile</span>
@@ -298,7 +298,7 @@ const LeftSidebar = ({ pageName }) => {
         </form>
       </div>
       {userLogin && (
-        <div className="flex items-center justify-between mt-28 rounded-3xl hover:bg-gray-200 p-2">
+        <div className="flex items-center justify-between mt-16 rounded-3xl hover:bg-gray-200 p-2">
           <div className="flex items-center gap-2">
             <div className="w-[45px] h-[40px] contain border rounded-full overflow-hidden">
               <img

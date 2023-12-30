@@ -68,13 +68,13 @@ router.post("/logout", (req, res) => {
   res.clearCookie("token").redirect("http://localhost:3000");
 });
 
-router.get("/profile/:userId", async (req, res) => {
+router.get("/profile/:username", async (req, res) => {
   try {
-    const userID = req.params.userId;
-    const user = await User.findById(userID);
+    const username = req.params.username;
+    const user = await User.findOne({username}).select('-password -salt');
 
     if (!user) {
-      console.log("No user found");
+      res.end();
     }
     res.send(user); // Send actual user details
   } catch {}
