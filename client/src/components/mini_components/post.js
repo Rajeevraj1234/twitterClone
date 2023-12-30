@@ -63,12 +63,12 @@ const Post = () => {
     <div
       onFocus={() => setActive(true)}
       onBlur={() => setEveryone(false)}
-      className="flex p-5 border border-gray-200 w-full select-none "
+      className="flex  p-5 border border-gray-200 w-full select-none "
     >
-      <div className="w-[45px] h-[40px] contain border rounded-full overflow-hidden m-3">
-        <img src={`http://localhost:8000/${userLogin?.profileImage}`} alt="" />
+      <div className="w-[9%] m-3 ml-[-4px]">
+        <img src={`http://localhost:8000/${userLogin?.profileImage}`} alt="" className="w-[40px] h-[40px] contain border rounded-full overflow-hidden" />
       </div>
-      <div className="flex flex-col justify-start items-start">
+      <div className="flex flex-col justify-start items-start w-[88%]">
         {active && (
           <span
             onClick={() => {
@@ -120,7 +120,7 @@ const Post = () => {
             </span>
           )}
           {active && <hr className="w-[100%] my-3" />}
-          <div className="flex justify-between w-[500px] items-center text-lg text-blue-600 font-bold">
+          <div className="flex justify-between w-[90%] items-center text-lg text-blue-600 font-bold">
             <div className="flex gap-1">
               <span className="hover:bg-blue-50 transition duration-75 ease-linear rounded-full p-2">
                 <label htmlFor="tweetImage">
@@ -138,13 +138,13 @@ const Post = () => {
               <span className="hover:bg-blue-50 transition duration-75 ease-linear rounded-full p-2">
                 <AiOutlineGif />
               </span>
-              <span className="hover:bg-blue-50 transition duration-75 ease-linear rounded-full p-2">
+              <span className="hover:bg-blue-50 transition duration-75 ease-linear rounded-full p-2 hidden md:block ">
                 <LuListTodo />
               </span>
               <span className="hover:bg-blue-50 transition duration-75 ease-linear rounded-full p-2">
                 <BsEmojiSmile />
               </span>
-              <span className="hover:bg-blue-50 transition duration-75 ease-linear rounded-full p-2">
+              <span className="hover:bg-blue-50 transition duration-75 ease-linear rounded-full p-2 hidden md:block">
                 <BsCalendar4Range />
               </span>
               <span className="hover:bg-blue-50 transition duration-75 ease-linear rounded-full p-2">

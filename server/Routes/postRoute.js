@@ -19,36 +19,40 @@ const upload = multer({ storage: storage });
 
 router.post("/tweet", upload.single("tweetImage"), async (req, res) => {
   const data = req.body;
-  let tweet;
-  try {
-    if (req.file) {
-      tweet = await Tweet.create({
-        tweet: data.postInput,
-        createdBy: data.userId,
-        image: `tweetImage/${req.file.filename}`,
-      });
-    } else {
-      tweet = await Tweet.create({
-        tweet: data.postInput,
-        createdBy: data.userId,
-      });
+  if (data.postInput) {  //checking if data is there or not
+    let tweet;
+    try {
+      if (req.file) {
+        tweet = await Tweet.create({
+          tweet: data.postInput,
+          createdBy: data.userId,
+          image: `tweetImage/${req.file.filename}`,
+        });
+      } else {
+        tweet = await Tweet.create({
+          tweet: data.postInput,
+          createdBy: data.userId,
+        });
+      }
+      res.status(201);
+    } catch (error) {
+      console.error("Error creating tweet:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
-    res.status(201);
-  } catch (error) {
-    console.error("Error creating tweet:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+
+    await User.updateOne(
+      //pushing data to user to know hopw much post which user did
+      { _id: data.userId },
+      {
+        $push: {
+          posts: tweet._id,
+        },
+      }
+    );
+  }else{
+    res.status(404).json({msg:"Empty tweet"});
   }
 
-  await User.updateOne(
-    { _id: data.userId },
-    {
-      $push: {
-        posts: tweet._id,
-      },
-    }
-  );
-
-  res.end();
 });
 
 router.get("/getTweet", async (req, res) => {

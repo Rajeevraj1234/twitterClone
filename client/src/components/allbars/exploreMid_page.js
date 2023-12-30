@@ -2,6 +2,7 @@ import React from "react";
 import ExploreSection from "../mini_components/trendingPage";
 import SearchBar from "../mini_components/search";
 import TopMidPage from "../mini_components/topSectionOfExplore";
+import SmartNavbar from "../mini_components/smartphoneNavbar";
 import { RiSettings3Line } from "react-icons/ri";
 
 const MidPage = () => {
@@ -17,6 +18,9 @@ const MidPage = () => {
       <div className="mt-8">
         <ExploreSection />
       </div>
+        <div>
+          <SmartNavbar pageName={"explore"}/>
+        </div>
     </div>
   );
 };
