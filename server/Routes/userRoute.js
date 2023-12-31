@@ -28,6 +28,8 @@ router.post("/signup", async (req, res) => {
     password: user.password,
     about: user.about,
     dob: user.dob,
+    profileImage: "profileAndCoverImages/demoUserImage.jpg",
+    coverImage: "profileAndCoverImages/demoCoverImage.png",
   });
 
   return res.redirect("http://localhost:3000");
@@ -57,8 +59,10 @@ router.get("/userDetail", async (req, res) => {
     req.user = userPayload;
     const userProfile = await User.findById(userPayload._id);
     profileImage = userProfile.profileImage;
+    userFollowing = userProfile.following;
+    userFollowers = userProfile.followers;
 
-    res.json({ message: "Authorized", user: { ...userPayload, profileImage } });
+    res.json({ message: "Authorized", user: { ...userPayload, profileImage,userFollowers,userFollowing } });
   } catch (error) {
     res.status(401).json({ message: "Unauthorized" });
   }
@@ -71,7 +75,7 @@ router.post("/logout", (req, res) => {
 router.get("/profile/:username", async (req, res) => {
   try {
     const username = req.params.username;
-    const user = await User.findOne({username}).select('-password -salt');
+    const user = await User.findOne({ username }).select("-password -salt");
 
     if (!user) {
       res.end();
@@ -115,7 +119,7 @@ router.post(
         console.log("Caught Error:", error);
         res.status(500).json({ error: "Internal Server Error" });
       }
-    }else{
+    } else {
       try {
         const result = await User.findByIdAndUpdate(userID, {
           fullname: data.fullname,
@@ -137,6 +141,48 @@ router.post(
     res.redirect("http://localhost:3000");
   }
 );
+
+router.post("/followUser", async (req, res) => {
+  const { loginUserId, followUserId } = req.body;
+  try {
+    const userData = await User.findById(loginUserId);
+    const validator = userData.following.includes(followUserId);
+    if (!validator) {
+      await User.findByIdAndUpdate(loginUserId, {
+        $push: {
+          following: followUserId,
+        },
+      });
+      await User.findByIdAndUpdate(followUserId, {
+        $push: {
+          followers: loginUserId,
+        },
+      });
+      res.json({ isFollowing: true });
+    }
+  } catch (error) {
+    res.status(404).json({ error: "Internal Server error" });
+  }
+});
+
+router.post("/unfollowUser", async (req, res) => {
+  const { loginUserId, followUserId } = req.body;
+  try {
+    await User.findByIdAndUpdate(loginUserId, {
+      $pull: {
+        following: followUserId,
+      },
+    });
+    await User.findByIdAndUpdate(followUserId, {
+      $pull: {
+        followers: loginUserId,
+      },
+    });
+    res.json({ isFollowing: false });
+  } catch (error) {
+    res.status(404).json({ error: "Internal Server error" });
+  }
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
