@@ -24,7 +24,7 @@ const SmartphoneNavbar = ({ pageName }) => {
     setActive(val);
   };
   return (
-    <footer class="bg-white px-1 border-gray-200 border-t-2 fixed inset-x-0 bottom-0 shadow-inner sm:hidden ">
+    <footer className="bg-white px-1 border-gray-200 border-t-2 fixed inset-x-0 bottom-0 shadow-inner sm:hidden ">
       <div className="flex justify-evenly items-center">
         <span
           className="rounded-3xl p-3 hover:bg-gray-200"
