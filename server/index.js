@@ -26,7 +26,7 @@ app.use(express.static(path.resolve('./public')));
 
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/twitter-backend")
+  .connect("mongodb+srv://rajeevraj1312:Rajeev1312raj@rajeevdatabase.paplyyn.mongodb.net/twitter-backend")
   .then(() => console.log("Mongoose Connected"))
   .catch((err) => console.log("Error while Connecting"));
 
