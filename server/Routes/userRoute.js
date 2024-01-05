@@ -38,8 +38,8 @@ router.post("/signup", async (req, res) => {
 
 // zod schema declare here
 const loginSchema = z.object({
-  email: z.string().email();
-  password: z.string();
+  email: z.string().email(),
+  password: z.string()
 })
 
 router.post("/login", async (req, res) => {
