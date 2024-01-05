@@ -6,12 +6,13 @@ const { validateToken } = require("../Services/authentication");
 const { checkForAunthicationCookie } = require("../middlewares/authentication");
 const multer = require("multer");
 const path = require("path");
+const { z } = require("zod");
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: function(req, file, cb) {
     cb(null, path.resolve("./public/profileAndCoverImages/"));
   },
-  filename: function (req, file, cb) {
+  filename: function(req, file, cb) {
     const fileName = `${Date.now()}-${file.originalname}`;
 
     cb(null, fileName);
@@ -35,10 +36,18 @@ router.post("/signup", async (req, res) => {
   return res.redirect("http://localhost:3000");
 });
 
+// zod schema declare here
+const loginSchema = z.object({
+  email: z.string().email();
+  password: z.string();
+})
+
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+
   try {
-    const token = await User.matchPasswordAndGenerateToken(email, password);
+    const { email, password } = req.body;
+    const validateData = loginSchema.safeParse(email, password);
+    const token = await User.matchPasswordAndGenerateToken(validateData.email, validateData.password);
     return res
       .cookie("token", token, { sameSite: "None", secure: true })
       .redirect("http://localhost:3000");
@@ -55,6 +64,7 @@ router.get("/userDetail", async (req, res) => {
 
   try {
     // Verify the token
+
     const userPayload = validateToken(tokenCookieValue);
     req.user = userPayload;
     const userProfile = await User.findById(userPayload._id);
@@ -62,7 +72,8 @@ router.get("/userDetail", async (req, res) => {
     userFollowing = userProfile.following;
     userFollowers = userProfile.followers;
 
-    res.json({ message: "Authorized", user: { ...userPayload, profileImage,userFollowers,userFollowing } });
+
+    res.json({ message: "Authorized", user: { ...userPayload, profileImage, userFollowers, userFollowing } });
   } catch (error) {
     res.status(401).json({ message: "Unauthorized" });
   }
@@ -81,7 +92,7 @@ router.get("/profile/:username", async (req, res) => {
       res.end();
     }
     res.send(user); // Send actual user details
-  } catch {}
+  } catch { }
 });
 
 router.post(
