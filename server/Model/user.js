@@ -70,7 +70,6 @@ const userSchema = new Schema(
 
 userSchema.pre("save", function (next) {
   const user = this;
-  console.log(user);
   if (!user.isModified("password")) return;
 
   const salt = randomBytes(16).toString();

@@ -98,12 +98,27 @@ const Tweets = ({ userID }) => {
                     <div className="text-sm font-medium">
                       {tweet.tweet}
 
-                      {tweet.image && (
-                        <img
-                          src={`http://localhost:8000/${tweet?.image}`}
-                          className="max-w-[90%] my-3 rounded-xl max-h-[500px] overflow-hidden"
-                          alt="Loading..."
-                        ></img>
+                      {tweet?.content && (
+                        <div>
+                          {tweet?.content.includes(".mp4") ? (
+                            <div>
+                              <video width="320" height="240" controls>
+                                <source
+                                  src={`http://localhost:8000/${tweet?.content}`}
+                                  type="video/mp4"
+                                ></source>
+                              </video>
+                            </div>
+                          ) : (
+                          <div>
+                            <img
+                              src={`http://localhost:8000/${tweet?.content}`}
+                              className="max-w-[90%] my-3 rounded-xl max-h-[500px] overflow-hidden"
+                              alt="Loading..."
+                            />
+                            </div>
+                          )}
+                        </div>
                       )}
                     </div>
                   </div>

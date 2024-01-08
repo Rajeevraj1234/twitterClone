@@ -18,10 +18,10 @@ const Post = () => {
   const { userLogin } = useUserLoginContextProvider();
 
   const [postInput, setText] = useState("");
-  const [image, setImage] = useState(null);
+  const [content, setContent] = useState(null);
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setImage(file);
+    setContent(file);
   };
 
   const handleSubmit = async (e) => {
@@ -30,7 +30,7 @@ const Post = () => {
       const formData = new FormData();
       formData.append('postInput', postInput);
       formData.append('userId', userLogin?._id);
-      formData.append('tweetImage', image);
+      formData.append('tweetContent', content);
     
       const response = await axios.post('http://localhost:8000/post/tweet', formData, {
         headers: {

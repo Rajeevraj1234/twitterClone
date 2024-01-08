@@ -6,7 +6,7 @@ const tweetSchema = new Schema(
       type: String,
       required: true,
     },
-    image: {
+    content: {
       type: String,
     },
     likes: [{

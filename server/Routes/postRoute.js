@@ -8,7 +8,7 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.resolve("./public/tweetImage/"));
+    cb(null, path.resolve("./public/tweetContent/"));
   },
   filename: function (req, file, cb) {
     const fileName = `${Date.now()}-${file.originalname}`;
@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.post("/tweet", upload.single("tweetImage"), async (req, res) => {
+router.post("/tweet", upload.single("tweetContent"), async (req, res) => {
   const data = req.body;
   if (data.postInput) {  //checking if data is there or not
     let tweet;
@@ -26,7 +26,7 @@ router.post("/tweet", upload.single("tweetImage"), async (req, res) => {
         tweet = await Tweet.create({
           tweet: data.postInput,
           createdBy: data.userId,
-          image: `tweetImage/${req.file.filename}`,
+          content: `tweetContent/${req.file.filename}`,
         });
       } else {
         tweet = await Tweet.create({
