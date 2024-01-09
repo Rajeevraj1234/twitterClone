@@ -14,19 +14,7 @@ const tweetSchema = new Schema(
         type: String,
       },
     ],
-    reply: [
-      {
-        replyerID: {
-          type: Schema.Types.ObjectId,
-          ref: "user",
-
-        },
-        replyerComment: {
-          type: String,
-        },
-      },
-    ],
-    pointTo:{
+    pointedTo:{
       type:String,
     },
     pointedBy:[{

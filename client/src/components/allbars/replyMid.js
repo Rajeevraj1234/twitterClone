@@ -2,8 +2,10 @@ import React from "react";
 import SingleTweet from "../mini_components/singleTweet";
 import Post from "../mini_components/post";
 import { FaArrowLeft } from "react-icons/fa6";
+import { useParams } from "react-router-dom";
 
-const ReplyMid = ({user}) => {
+const ReplyMid = ({ user }) => {
+  const { id } = useParams();
   return (
     <div>
       <div className="text-lg font-bold">
@@ -14,7 +16,7 @@ const ReplyMid = ({user}) => {
       </div>
       <SingleTweet user={user} />
       <div className="w-[100%">
-        <Post />
+        <Post id={id} />
       </div>
     </div>
   );

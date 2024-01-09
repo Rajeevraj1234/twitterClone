@@ -11,7 +11,7 @@ import { useUserLoginContextProvider } from "../context/userLoginContext";
 
 // https://i.pinimg.com/originals/ba/6e/49/ba6e49004292b214acd59d32a8ec8806.gif
 
-const Post = () => {
+const Post = ({ id }) => {
   const [active, setActive] = useState(false);
   const [everyone, setEveryone] = useState(false);
   const [pub, setPub] = useState("Everyone");
@@ -27,18 +27,41 @@ const Post = () => {
   const handleSubmit = async (e) => {
     // e.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append('postInput', postInput);
-      formData.append('userId', userLogin?._id);
-      formData.append('tweetContent', content);
-    
-      const response = await axios.post('http://localhost:8000/post/tweet', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-    
-      console.log('Response:', response.data);
+      if (id) {
+        console.log(id);
+        const formData = new FormData();
+        formData.append("postInput", postInput);
+        formData.append("userId", userLogin?._id);
+        formData.append("tweetContent", content);
+        formData.append("pointedTo", id);
+
+        const response = await axios.post(
+          "http://localhost:8000/post/tweet",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(response);
+      } else {
+        const formData = new FormData();
+        formData.append("postInput", postInput);
+        formData.append("userId", userLogin?._id);
+        formData.append("tweetContent", content);
+
+        const response = await axios.post(
+          "http://localhost:8000/post/tweet",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(response);
+      }
     } catch (error) {
       if (error.response) {
         // The request was made and the server responded with a status code
@@ -66,7 +89,11 @@ const Post = () => {
       className="flex  p-5 border border-gray-200 w-full select-none "
     >
       <div className="w-[9%] m-3 ml-[-4px]">
-        <img src={`http://localhost:8000/${userLogin?.profileImage}`} alt="" className="w-[40px] h-[40px] contain border rounded-full overflow-hidden" />
+        <img
+          src={`http://localhost:8000/${userLogin?.profileImage}`}
+          alt=""
+          className="w-[40px] h-[40px] contain border rounded-full overflow-hidden"
+        />
       </div>
       <div className="flex flex-col justify-start items-start w-[88%]">
         {active && (

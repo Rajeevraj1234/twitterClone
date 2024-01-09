@@ -19,37 +19,70 @@ const upload = multer({ storage: storage });
 
 router.post("/tweet", upload.single("tweetContent"), async (req, res) => {
   const data = req.body;
+  console.log(data);
   if (data.postInput) {
     //checking if data is there or not
     let tweet;
     try {
-      if (req.file) {
+      if (data.pointedTo && req.file) {
+        console.log("logged 1");
+        tweet = await Tweet.create({
+          tweet: data.postInput,
+          createdBy: data.userId,
+          content: `tweetContent/${req.file.filename}`,
+          pointedTo: data.pointedTo,
+        });
+      } else if (data.pointedTo) {
+        console.log("logged 2");
+        tweet = await Tweet.create({
+          tweet: data.postInput,
+          createdBy: data.userId,
+          pointedTo: data.pointedTo,
+        });
+      } else if (req.file) {
+        console.log("logged 3");
         tweet = await Tweet.create({
           tweet: data.postInput,
           createdBy: data.userId,
           content: `tweetContent/${req.file.filename}`,
         });
       } else {
+        console.log("logged 4");
         tweet = await Tweet.create({
           tweet: data.postInput,
           createdBy: data.userId,
         });
       }
       res.status(201);
+
+      try {
+        if (data.pointedTo) {
+          await Tweet.updateOne(
+            { _id: data.pointedTo },
+            {
+              $push: {
+                pointedBy: tweet._id,
+              },
+            }
+          );
+        }
+      } catch (error) {
+        console.error("Error updating document:", error);
+      }
+
+      await User.updateOne(
+        //pushing data to user to know how much post which user did
+        { _id: data.userId },
+        {
+          $push: {
+            posts: tweet._id,
+          },
+        }
+      );
     } catch (error) {
       console.error("Error creating tweet:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }
-
-    await User.updateOne(
-      //pushing data to user to know hopw much post which user did
-      { _id: data.userId },
-      {
-        $push: {
-          posts: tweet._id,
-        },
-      }
-    );
   } else {
     res.status(404).json({ msg: "Empty tweet" });
   }
@@ -101,10 +134,13 @@ router.post("/delete", async (req, res) => {
   res.status(200).json({ msg: "Tweet Deleted Sucessfully" });
 });
 
-router.get("/reply/:id", async(req, res) => {
+router.get("/reply/:id", async (req, res) => {
   const id = req.params.id;
-  const tweetData = await Tweet.findById(id).populate("createdBy","-password -salt");
-  res.json(tweetData)
+  const tweetData = await Tweet.findById(id).populate(
+    "createdBy",
+    "-password -salt"
+  );
+  res.json(tweetData);
 });
 
 module.exports = router;

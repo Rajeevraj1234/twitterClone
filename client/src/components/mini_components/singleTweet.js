@@ -53,7 +53,7 @@ const SingleTweet = ({user}) => {
   };
 
   return (
-    <div className="flex-col p-3 w-[100%]" key={tweet?._id}>
+    <div className="flex-col p-3 w-[100%]">
       <div className="flex items-center p-3 w-[100%]">
         <div className="mr-4 flex items-start w-[8%]">
           <img
