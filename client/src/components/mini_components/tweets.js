@@ -73,7 +73,7 @@ const Tweets = ({ userID }) => {
       {TweetData &&
         TweetData.map((tweet, index) => {
           return (
-            <div className="border flex p-3 w-[100%]" key={tweet._id}>
+            <div className="border flex p-3 w-[100%] " key={tweet?._id}>
               <div className="mr-4 flex items-start mt-3 w-[8%]">
                 <img
                   src={`http://localhost:8000/${tweet?.createdBy?.profileImage}`}
@@ -81,9 +81,9 @@ const Tweets = ({ userID }) => {
                   className="w-[40px] h-[40px] contain border rounded-full overflow-hidden"
                 />
               </div>
-              <div className="flex flex-col gap-3 w-[92%]">
-                <div className="flex justify-between items-start w-full">
-                  <div>
+              <div className="flex flex-col gap-3 w-[92%] ">
+                <div className="flex justify-between items-start w-full ">
+                  <div className="w-full">
                     <div className="text-sm">
                       {" "}
                       <span className="font-bold text-lg">
@@ -95,32 +95,34 @@ const Tweets = ({ userID }) => {
                       </span>{" "}
                       @{tweet.createdBy?.username} · {tweet.createdAt}{" "}
                     </div>
-                    <div className="text-sm font-medium">
-                      {tweet.tweet}
+                    <NavLink to={`/reply/${tweet?._id}`}>
+                      <div className="text-sm font-medium w-[100%]  ">
+                        {tweet.tweet}
 
-                      {tweet?.content && (
-                        <div>
-                          {tweet?.content.includes(".mp4") ? (
-                            <div>
-                              <video width="320" height="240" controls>
-                                <source
-                                  src={`http://localhost:8000/${tweet?.content}`}
-                                  type="video/mp4"
-                                ></source>
-                              </video>
-                            </div>
-                          ) : (
+                        {tweet?.content && (
                           <div>
-                            <img
-                              src={`http://localhost:8000/${tweet?.content}`}
-                              className="max-w-[90%] my-3 rounded-xl max-h-[500px] overflow-hidden"
-                              alt="Loading..."
-                            />
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
+                            {tweet?.content.includes(".mp4") ? (
+                              <div>
+                                <video width="320" height="240" controls>
+                                  <source
+                                    src={`http://localhost:8000/${tweet?.content}`}
+                                    type="video/mp4"
+                                  ></source>
+                                </video>
+                              </div>
+                            ) : (
+                              <div>
+                                <img
+                                  src={`http://localhost:8000/${tweet?.content}`}
+                                  className="max-w-[90%] my-3 rounded-xl max-h-[500px] overflow-hidden"
+                                  alt="Loading..."
+                                />
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </NavLink>
                   </div>
                   <div className="hover:bg-blue-50 transition duration-75 ease-linear rounded-full p-2">
                     <div
@@ -162,7 +164,9 @@ const Tweets = ({ userID }) => {
                         {" "}
                         <AiOutlineMessage />
                       </span>
-                      <span className="text-[12px]">{tweet?.reply}</span>
+                      <span className="text-[12px]">
+                        {tweet?.reply?.length}
+                      </span>
                     </span>
                     <span className="flex items-center">
                       <span className="hover:bg-green-100 rounded-full p-2 ">

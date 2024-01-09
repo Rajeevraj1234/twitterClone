@@ -140,10 +140,10 @@ const TopSetionOfProfile = ({ user }) => {
       </div>
       <div className="ml-3 mt-3 text-sm flex gap-4">
         <span>
-          <span className="font-bold">{user?.following.length}</span> following
+          <span className="font-bold">{user?.following?.length}</span> following
         </span>
         <span>
-          <span className="font-bold">{user?.followers.length}</span> followers
+          <span className="font-bold">{user?.followers?.length}</span> followers
         </span>
       </div>
       <div className="flex w-[100%]  font-semibold text-md mt-3 text-md ">

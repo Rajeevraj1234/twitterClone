@@ -9,13 +9,30 @@ const tweetSchema = new Schema(
     content: {
       type: String,
     },
-    likes: [{
-      type: String,
-    }],
-    reply: {
-      type: String,
-      default:0,
+    likes: [
+      {
+        type: String,
+      },
+    ],
+    reply: [
+      {
+        replyerID: {
+          type: Schema.Types.ObjectId,
+          ref: "user",
+
+        },
+        replyerComment: {
+          type: String,
+        },
+      },
+    ],
+    pointTo:{
+      type:String,
     },
+    pointedBy:[{
+      type:Schema.Types.ObjectId,
+      ref:"tweet"
+    }],
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: "user",

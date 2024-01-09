@@ -19,7 +19,8 @@ const upload = multer({ storage: storage });
 
 router.post("/tweet", upload.single("tweetContent"), async (req, res) => {
   const data = req.body;
-  if (data.postInput) {  //checking if data is there or not
+  if (data.postInput) {
+    //checking if data is there or not
     let tweet;
     try {
       if (req.file) {
@@ -49,10 +50,9 @@ router.post("/tweet", upload.single("tweetContent"), async (req, res) => {
         },
       }
     );
-  }else{
-    res.status(404).json({msg:"Empty tweet"});
+  } else {
+    res.status(404).json({ msg: "Empty tweet" });
   }
-
 });
 
 router.get("/getTweet", async (req, res) => {
@@ -91,11 +91,20 @@ router.post("/like", async (req, res) => {
   }
 });
 
-router.post("/delete" , async(req,res)=>{
+router.post("/delete", async (req, res) => {
   const data = req.body;
-  await Tweet.findOneAndDelete({_id:data.tweetID})
-  await User.updateOne({_id:data.userID._id},{$pull:{posts: data.tweetID}})
-  res.status(200).json({msg:"Tweet Deleted Sucessfully"});
-})
+  await Tweet.findOneAndDelete({ _id: data.tweetID });
+  await User.updateOne(
+    { _id: data.userID._id },
+    { $pull: { posts: data.tweetID } }
+  );
+  res.status(200).json({ msg: "Tweet Deleted Sucessfully" });
+});
+
+router.get("/reply/:id", async(req, res) => {
+  const id = req.params.id;
+  const tweetData = await Tweet.findById(id).populate("createdBy","-password -salt");
+  res.json(tweetData)
+});
 
 module.exports = router;

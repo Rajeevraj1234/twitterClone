@@ -11,6 +11,7 @@ import Profile from "./components/Pages/profile";
 import OtherProfile from "./components/Pages/otherProfile";
 import Login from "./components/Pages/login";
 import Signup from "./components/Pages/signup";
+import Reply from "./components/Pages/reply";
 import { useUserLoginContextProvider } from "../src/components/context/userLoginContext";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="/otherprofile/:username" element={<OtherProfile />} />
         <Route path="/home" element={<MainPage />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/reply/:id" element={<Reply />} />
       </Routes>
     </BrowserRouter>
   );
