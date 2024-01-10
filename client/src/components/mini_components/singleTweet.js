@@ -11,7 +11,7 @@ import { SlUserFollowing } from "react-icons/sl";
 import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-const SingleTweet = ({user}) => {
+const SingleTweet = ({ user }) => {
   const { userLogin } = useUserLoginContextProvider();
   const { id } = useParams();
   const [tweet, setTweet] = useState();

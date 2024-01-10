@@ -19,13 +19,11 @@ const upload = multer({ storage: storage });
 
 router.post("/tweet", upload.single("tweetContent"), async (req, res) => {
   const data = req.body;
-  console.log(data);
   if (data.postInput) {
     //checking if data is there or not
     let tweet;
     try {
       if (data.pointedTo && req.file) {
-        console.log("logged 1");
         tweet = await Tweet.create({
           tweet: data.postInput,
           createdBy: data.userId,
@@ -33,21 +31,18 @@ router.post("/tweet", upload.single("tweetContent"), async (req, res) => {
           pointedTo: data.pointedTo,
         });
       } else if (data.pointedTo) {
-        console.log("logged 2");
         tweet = await Tweet.create({
           tweet: data.postInput,
           createdBy: data.userId,
           pointedTo: data.pointedTo,
         });
       } else if (req.file) {
-        console.log("logged 3");
         tweet = await Tweet.create({
           tweet: data.postInput,
           createdBy: data.userId,
           content: `tweetContent/${req.file.filename}`,
         });
       } else {
-        console.log("logged 4");
         tweet = await Tweet.create({
           tweet: data.postInput,
           createdBy: data.userId,

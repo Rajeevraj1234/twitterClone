@@ -1,5 +1,6 @@
 import React from "react";
 import SingleTweet from "../mini_components/singleTweet";
+import ReplyAllTweet from "../mini_components/replyAllTweet";
 import Post from "../mini_components/post";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
@@ -17,6 +18,9 @@ const ReplyMid = ({ user }) => {
       <SingleTweet user={user} />
       <div className="w-[100%">
         <Post id={id} />
+      </div>
+      <div>
+        <ReplyAllTweet id={id}  />
       </div>
     </div>
   );

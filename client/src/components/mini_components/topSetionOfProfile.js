@@ -1,18 +1,17 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { CiLocationOn, CiLink, CiCalendarDate } from "react-icons/ci";
 import AllTweets from "../mini_components/tweets";
 import ProfileEditSection from "../mini_components/profileEditSection";
 import { useUserLoginContextProvider } from "../context/userLoginContext";
-import axios from "axios"
+import axios from "axios";
 
 const TopSetionOfProfile = ({ user }) => {
   const { userLogin } = useUserLoginContextProvider();
   const [active, setActive] = useState("posts");
   const [editSection, setEditSection] = useState(false);
-  const [isFollowing,setIsFollowing] = useState(null);
+  const [isFollowing, setIsFollowing] = useState(null);
 
-  
   useEffect(() => {
     // Perform the check when user or userLogin changes
     if (user && userLogin && user.followers.includes(userLogin._id)) {
@@ -21,26 +20,29 @@ const TopSetionOfProfile = ({ user }) => {
       setIsFollowing(false);
     }
   }, [user, userLogin]);
-  
-  
-  
 
-  const handleFollowUser = async() =>{
+  const handleFollowUser = async () => {
     const data = {
-      loginUserId:userLogin?._id,
-      followUserId:user?._id,
-    }
-    const response = await axios.post("http://localhost:8000/user/followUser",data)
+      loginUserId: userLogin?._id,
+      followUserId: user?._id,
+    };
+    const response = await axios.post(
+      "http://localhost:8000/user/followUser",
+      data
+    );
     setIsFollowing(response.data.isFollowing);
-  }
-  const handleUnfollowUser = async() =>{
+  };
+  const handleUnfollowUser = async () => {
     const data = {
-      loginUserId:userLogin?._id,
-      followUserId:user?._id,
-    }
-    const response = await axios.post("http://localhost:8000/user/unfollowUser",data)
+      loginUserId: userLogin?._id,
+      followUserId: user?._id,
+    };
+    const response = await axios.post(
+      "http://localhost:8000/user/unfollowUser",
+      data
+    );
     setIsFollowing(response.data.isFollowing);
-  }
+  };
 
   return (
     <div className="select-none">
@@ -84,32 +86,30 @@ const TopSetionOfProfile = ({ user }) => {
               </span>
             )}
           </span>
-        ) : (
-          isFollowing ? (
-            <span
+        ) : isFollowing ? (
+          <span
             onClick={handleUnfollowUser}
             className="me-5 mt-2 text-sm border-2 border-gray px-4 py-2 font-bold rounded-3xl cursor-pointer bg-black text-white"
           >
             Unfollow
-            {editSection && ( 
+            {editSection && (
               <span className="absolute no-scrollbar pb-2 inset-0 top-[25%] left-[50%] -translate-x-1/2 -translate-y-1/2 border-2 bg-white w-[30rem] h-[30%] px-16 rounded-xl overflow-y-scroll ">
                 <ProfileEditSection user={user} />
               </span>
             )}
           </span>
-          ):(
-            <span
+        ) : (
+          <span
             onClick={handleFollowUser}
             className="me-5 mt-2 text-sm border-2 border-gray px-4 py-2 font-bold rounded-3xl cursor-pointer bg-black text-white"
           >
             Follow
-            {editSection && ( 
+            {editSection && (
               <span className="absolute no-scrollbar pb-2 inset-0 top-[25%] left-[50%] -translate-x-1/2 -translate-y-1/2 border-2 bg-white w-[30rem] h-[30%] px-16 rounded-xl overflow-y-scroll ">
                 <ProfileEditSection user={user} />
               </span>
             )}
           </span>
-          )
         )}
       </div>
 

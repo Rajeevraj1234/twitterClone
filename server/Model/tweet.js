@@ -14,6 +14,18 @@ const tweetSchema = new Schema(
         type: String,
       },
     ],
+    bookmark:{
+      type:String,
+      default:0,
+    },
+    view:{
+      type:String,
+      default:0,
+    },
+    retweet:{
+      type:String,
+      default:0,
+    },
     pointedTo:{
       type:String,
     },

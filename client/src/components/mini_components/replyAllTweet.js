@@ -10,7 +10,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { SlUserFollowing } from "react-icons/sl";
 import { NavLink } from "react-router-dom";
 
-const Tweets = ({ userID }) => {
+const ReplyAllTweet = ({ userID, id }) => {
   const { userLogin } = useUserLoginContextProvider();
   const [TweetData, setTweetData] = useState([]);
   const [like, setLike] = useState("");
@@ -68,11 +68,15 @@ const Tweets = ({ userID }) => {
     setDeleteResponse(response.data.msg);
   };
 
+  // let filteredTweet = TweetData.filter((tweet)=>{
+  //   return tweet.pointedTo === id;
+  // })
+
   return (
     <div className="w-full ">
       {TweetData &&
         TweetData.map((tweet, index) => {
-          if (!tweet.pointedTo) {
+          if (tweet.pointedTo === id) {
             return (
               <div className="border flex p-3 w-[100%] " key={tweet?._id}>
                 <div className="mr-4 flex items-start mt-3 w-[8%]">
@@ -166,7 +170,7 @@ const Tweets = ({ userID }) => {
                           <AiOutlineMessage />
                         </span>
                         <span className="text-[12px]">
-                          {tweet?.pointedBy?.length}
+                          {tweet?.reply?.length}
                         </span>
                       </span>
                       <span className="flex items-center">
@@ -221,4 +225,4 @@ const Tweets = ({ userID }) => {
   );
 };
 
-export default Tweets;
+export default ReplyAllTweet;

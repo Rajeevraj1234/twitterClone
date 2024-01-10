@@ -28,7 +28,7 @@ const Post = ({ id }) => {
     // e.preventDefault();
     try {
       if (id) {
-        console.log(id);
+        
         const formData = new FormData();
         formData.append("postInput", postInput);
         formData.append("userId", userLogin?._id);
@@ -44,7 +44,7 @@ const Post = ({ id }) => {
             },
           }
         );
-        console.log(response);
+        
       } else {
         const formData = new FormData();
         formData.append("postInput", postInput);
@@ -60,7 +60,7 @@ const Post = ({ id }) => {
             },
           }
         );
-        console.log(response);
+        
       }
     } catch (error) {
       if (error.response) {
