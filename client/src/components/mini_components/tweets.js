@@ -147,10 +147,12 @@ const Tweets = ({ userID }) => {
                               </ul>
                             ) : (
                               <ul className="hover:bg-gray-200 p-2 rounded-lg">
-                                <li className="flex gap-1 items-center text-lg font-bold">
-                                  <SlUserFollowing />
-                                  Follow
-                                </li>
+                                <NavLink to={`http://localhost:3000/otherprofile/${tweet?.createdBy?.username}`}>
+                                  <li className="flex gap-1 items-center text-lg font-bold">
+                                    <SlUserFollowing />
+                                    User Profile
+                                  </li>
+                                </NavLink>
                               </ul>
                             )}
                           </span>

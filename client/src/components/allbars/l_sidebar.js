@@ -16,6 +16,7 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import { useUserLoginContextProvider } from "../context/userLoginContext";
 import { GiFeather } from "react-icons/gi";
 import { HiOutlineLogout } from "react-icons/hi";
+import { IoSettingsOutline } from "react-icons/io5";
 
 const LeftSidebar = ({ pageName }) => {
   const { userLogin } = useUserLoginContextProvider();
@@ -31,7 +32,9 @@ const LeftSidebar = ({ pageName }) => {
   };
 
   return (
-    <div className="p-3 select-none fixed h-[100vh] overflow-scroll no-scrollbar hidden sm:block ">
+    <div 
+      
+      className="p-3 select-none fixed h-[100vh] overflow-scroll no-scrollbar hidden sm:block ">
       <span className="text-3xl">
         <RiTwitterXLine />
       </span>
@@ -255,10 +258,28 @@ const LeftSidebar = ({ pageName }) => {
           }}
         >
           {active === "more" ? (
-            <span className="flex items-center text-2xl gap-2">
+            <span className="flex items-center relative text-2xl gap-2">
               <CgMoreO />
               <span className="text-xl font-semibold hidden xl:block">
                 More
+              </span>
+              <span className="absolute inset-0 top-[-200%] left-[-5%] h-[100px] w-[200px] bg-white shadow-xl border rounded-xl "           >
+                <form action="http://localhost:8000/user/logout" method="post">
+                  <button
+                  type="submit"
+                  className="font-bold text-lg p-3 w-[100%] hover:bg-gray-100 sm:hidden xl:block"
+                  >
+                  <span className="flex items-center gap-2">      
+                    <HiOutlineLogout /> 
+                    Log Out
+                    </span>
+                  </button>
+                </form>
+                <span className="font-bold text-lg p-3 w-[100%] hover:bg-gray-100 sm:hidden xl:block flex items-center gap-2" >
+                  <span className="flex gap-2 items-center">
+                    <IoSettingsOutline/> Setting
+                  </span> 
+                </span>
               </span>
             </span>
           ) : (
@@ -269,34 +290,8 @@ const LeftSidebar = ({ pageName }) => {
           )}
         </span>
       </div>
-      <div className="flex flex-col">
-        <button
-          type="button"
-          className="bg-blue-400 text-white font-bold text-xl p-3 w-[190px] mt-5 rounded-3xl hover:bg-blue-500 sm:hidden xl:block"
-        >
-          Post
-        </button>
-        <button
-          type="button"
-          className="bg-blue-400 text-white font-bold text-xl p-3 w-[45px] mt-5 rounded-3xl hover:bg-blue-500 xl:hidden"
-        >
-          <GiFeather />
-        </button>
-        <button
-          type="button"
-          className="bg-blue-400 text-white font-bold text-xl p-3 w-[45px] mt-5 rounded-3xl hover:bg-blue-500 xl:hidden"
-        >
-          <HiOutlineLogout />
-        </button>
-        <form action="http://localhost:8000/user/logout" method="post">
-          <button
-            type="submit"
-            className="bg-blue-400 text-white font-bold text-xl p-3 w-[190px] mt-5 rounded-3xl hover:bg-blue-500 sm:hidden xl:block"
-          >
-            Log Out
-          </button>
-        </form>
-      </div>
+
+        
       {userLogin && (
         <div className="flex items-center justify-between mt-16 rounded-3xl hover:bg-gray-200 p-2">
           <div className="flex items-center gap-2">

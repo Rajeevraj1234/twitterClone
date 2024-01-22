@@ -81,7 +81,7 @@ const TopSetionOfProfile = ({ user }) => {
           >
             Edit Profile
             {editSection && (
-              <span className="absolute no-scrollbar pb-2 inset-0 top-[25%] left-[50%] -translate-x-1/2 -translate-y-1/2 border-2 bg-white w-[30rem] h-[30%] px-16 rounded-xl overflow-y-scroll ">
+              <span className="absolute no-scrollbar pb-2 inset-0 lg:top-[10%] lg:left-[10%]  border-2 bg-white w-[full] h-[full] lg:w-[30rem] lg:h-[60%] px-16 rounded-xl overflow-y-scroll z-99">
                 <ProfileEditSection user={user} />
               </span>
             )}
@@ -93,7 +93,7 @@ const TopSetionOfProfile = ({ user }) => {
           >
             Unfollow
             {editSection && (
-              <span className="absolute no-scrollbar pb-2 inset-0 top-[25%] left-[50%] -translate-x-1/2 -translate-y-1/2 border-2 bg-white w-[30rem] h-[30%] px-16 rounded-xl overflow-y-scroll ">
+              <span className="absolute no-scrollbar pb-2 inset-0 top-[10%] left-[10%]  border-2 bg-white w-[30rem] h-[60%] px-16 rounded-xl overflow-y-scroll z-99">
                 <ProfileEditSection user={user} />
               </span>
             )}
